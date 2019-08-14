@@ -134,34 +134,33 @@ CDN_ENABLED = False
 
 
 # aws setup
-# if not DEBUG:
-CDN_ENABLED = True
-AWS_DEFAULT_ACL = None
-AWS_ACCESS_KEY_ID = 'AKIATDTBKQWKUIMMCXFE'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'http-project'
-STATIC_DISTRIBUTION_ID = 'dzx5c21ii2cyu'
-AWS_S3_DOMAIN = '{}.cloudfront.net'.format(STATIC_DISTRIBUTION_ID)
-AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
+if not DEBUG:
+    CDN_ENABLED = True
+    AWS_DEFAULT_ACL = None
+    AWS_ACCESS_KEY_ID = 'AKIATDTBKQWKUIMMCXFE'
+    AWS_SECRET_ACCESS_KEY = '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'
+    AWS_STORAGE_BUCKET_NAME = 'http-project'
+    STATIC_DISTRIBUTION_ID = 'dzx5c21ii2cyu'
+    AWS_S3_DOMAIN = '{}.cloudfront.net'.format(STATIC_DISTRIBUTION_ID)
+    AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
 
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+    ]
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+    STATICFILES_STORAGE = 'http_project.storage_backends.StaticStorage'
+    DEFAULT_FILE_STORAGE = 'http_project.storage_backends.MediaPublicStorage'
+    STATIC_LOCATION = 'static'
 
-STATICFILES_STORAGE = 'http_project.storage_backends.StaticStorage'
-DEFAULT_FILE_STORAGE = 'http_project.storage_backends.MediaPublicStorage'
-STATIC_LOCATION = 'static'
+    STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
 
-STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
+    AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
+    DEFAULT_FILE_STORAGE = 'http_project.storage_backends.PublicMediaStorage'
 
-AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
-DEFAULT_FILE_STORAGE = 'http_project.storage_backends.PublicMediaStorage'
+    AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
+    PRIVATE_FILE_STORAGE = 'http_project.storage_backends.PrivateMediaStorage'
 
-AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
-PRIVATE_FILE_STORAGE = 'http_project.storage_backends.PrivateMediaStorage'
-
-MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_PUBLIC_MEDIA_LOCATION)
+    MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_PUBLIC_MEDIA_LOCATION)
