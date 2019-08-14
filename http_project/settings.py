@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api_app',
+    'app',
     # third party
     'rest_framework',
     'storages'
@@ -139,22 +139,29 @@ CDN_ENABLED = True
 AWS_DEFAULT_ACL = None
 AWS_ACCESS_KEY_ID = 'AKIATDTBKQWKUIMMCXFE'
 AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'httpdog'
+AWS_STORAGE_BUCKET_NAME = 'http-project'
 STATIC_DISTRIBUTION_ID = 'dzx5c21ii2cyu'
-AWS_S3_CUSTOM_DOMAIN = '{}.cloudfront.net'.format(STATIC_DISTRIBUTION_ID)
-AWS_S3_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+AWS_S3_DOMAIN = '{}.cloudfront.net'.format(STATIC_DISTRIBUTION_ID)
+AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
-AWS_LOCATION = 'static'
+
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
 STATICFILES_STORAGE = 'http_project.storage_backends.StaticStorage'
-DEFAULT_FILE_STORAGE = 'http_project.storage_backends.MediaStorage'
+DEFAULT_FILE_STORAGE = 'http_project.storage_backends.MediaPublicStorage'
 STATIC_LOCATION = 'static'
+
 STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
-PUBLIC_MEDIA_LOCATION = 'media'
-MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, PUBLIC_MEDIA_LOCATION)
+
+AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
+DEFAULT_FILE_STORAGE = 'http_project.storage_backends.PublicMediaStorage'
+
+AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
+PRIVATE_FILE_STORAGE = 'http_project.storage_backends.PrivateMediaStorage'
+
+MEDIA_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_PUBLIC_MEDIA_LOCATION)

@@ -16,191 +16,21 @@
 
     <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="{% static_cdn 'css/normalize.css' %}">
-    <link rel="stylesheet" href="{% static_cdn 'css/main.css' %}">
-
     <meta name="theme-color" content="#fafafa">
-    <style>
-        #cloud-front-progressbar {
-            margin: 20px;
-            width: 100%;
-            height: 50px;
-        }
-
-        #s3-progressbar {
-            margin: 20px;
-            width: 100%;
-            height: 50px;
-        }
-
-        .margin-bottom-10 {
-            margin-bottom: 10%;
-        }
-
-        .section-container {
-            width: 80%;
-            margin: auto;
-            height: 80vh;
-        }
-
-        .inner-section {
-            width: 80%;
-        }
-
-        .nav-center {
-            width: 80%;
-            margin: auto;
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body>
-    <!--[if IE]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-    <![endif]-->
-
-    <!-- Add your site or application content here -->
-    <div class="container">
-        <nav class="nav-center">
-            <h4>
-                cloud front VS s3
-            </h4>
-        </nav>
-        <section class="section-container flex-center">
-            <div class="inner-section">
-                <div class="cloud-front-section margin-bottom-10 flex-center">
-                    <div id="cloud-front-progressbar"></div>
-                    <div id="click-button-1">click here</div>
-                </div>
-                <div class="s3-section margin-bottom-10 flex-center">
-                    <div id="s3-progressbar"></div>
-                    <div id="click-button-2">click here</div>
-                </div>
-            </div>
-        </section>
-    </div>
-    <script src="{% static_cdn 'js/vendor/modernizr-3.7.1.min.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script>
-        window.jQuery || document.write('<script src="{% static_cdn "js/vendor/jquery-3.4.1.min.js" %}"><\/script>')
-    </script>
-    <!-- <script src="{% static_cdn 'js/main.js' %}"></script> -->
-    <script src="{% static_cdn 'js/pace.min.js' %}"></script>
-    <script src="{% static_cdn 'js/progressbar.min.js' %}"></script>
-    <script>
-        // progressbar.js@1.0.0 version is used
-        // Docs: http://progressbarjs.readthedocs.org/en/1.0.0/
-        cloud_front_progressbar = $('#cloud-front-progressbar');
-        s3_progressbar = $('#s3-progressbar');
-        var cloud_front_bar = new ProgressBar.Line('#cloud-front-progressbar', {
-            strokeWidth: 4,
-            easing: 'easeInOut',
-            duration: 1400,
-            color: '#FFEA82',
-            trailColor: '#eee',
-            trailWidth: 1,
-            svgStyle: {
-                width: '100%',
-                height: '100%'
-            },
-            from: {
-                color: '#FFEA82'
-            },
-            to: {
-                color: '#ED6A5A'
-            },
-            step: (state, bar) => {
-                bar.path.setAttribute('stroke', state.color);
-            }
-        });
-        var s3_bar = new ProgressBar.Line('#s3-progressbar', {
-            strokeWidth: 4,
-            easing: 'easeInOut',
-            duration: 1400,
-            color: '#FFEA82',
-            trailColor: '#eee',
-            trailWidth: 1,
-            svgStyle: {
-                width: '100%',
-                height: '100%'
-            },
-            from: {
-                color: '#FFEA82'
-            },
-            to: {
-                color: '#ED6A5A'
-            },
-            step: (state, bar) => {
-                bar.path.setAttribute('stroke', state.color);
-            }
-        });
-
-        function createCORSRequest(method, url) {
-            var xhr = new XMLHttpRequest();
-            if ("withCredentials" in xhr) {
-                xhr.open(method, url, true);
-                xhr.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        console.log(percentComplete);
-                        cloud_front_bar.animate(percentComplete);
-                    }
-                }, false);
-                xhr.send();
-            } else if (typeof XDomainRequest != "undefined") {
-                xhr = new XDomainRequest();
-                xhr.open(method, url);
-                xhr.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total;
-                        console.log(percentComplete);
-                        cloud_front_bar.animate(percentComplete);
-                    }
-                }, false);
-                xhr.send();
-            } else {
-                xhr = null;
-            }
-            return xhr;
-        }
-        
-        
-
-        $("#click-button-1").click(function (e) {
-            var that = this;
-            var page_url = "{% static_cdn 'test_download/10mb.mp4' %}";
-
-            var req = createCORSRequest('GET', page_url);
-            if (!req) {
-                throw new Error('CORS not supported');
-            }
-        });
-        $("#click-button-2").click(function (e) {
-            var that = this;
-            var page_url = "{% static 'test_download/10mb.mp4' %}";
-
-            var req = new XMLHttpRequest();
-            req.open("GET", page_url, true);
-            req.withCredentials = true;
-            req.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    console.log(percentComplete);
-                    s3_bar.animate(percentComplete);
-                }
-            }, false);
-            req.send();
-        });
-    </script>
-
-    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-    <!-- <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set','transport','beacon'); ga('send', 'pageview')
-    </script>
-    <script src="https://www.google-analytics.com/analytics.js" async></script> -->
+    <h1>Hello world</h1>
+    <h4>static images</h4>
+    <img src="{% static_cdn 'tile.png' %}" alt="">
+    <h4>public images</h4>
+    {% for instance in public_images %}
+        <img src="{{ instance.image.url }}" alt="">
+    {% endfor %}
+    <h4>private images</h4>
+    {% for instance in private_images %}
+        <img src="{{ instance.image.url }}" alt="">
+    {% endfor %}
 </body>
 
 </html>
