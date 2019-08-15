@@ -137,10 +137,10 @@ CDN_ENABLED = False
 if not DEBUG:
     CDN_ENABLED = True
     AWS_DEFAULT_ACL = None
-    AWS_ACCESS_KEY_ID = 'AKIATDTBKQWKUIMMCXFE'
-    AWS_SECRET_ACCESS_KEY = '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'
+    AWS_ACCESS_KEY_ID = '*******************************'
+    AWS_SECRET_ACCESS_KEY = '*******************************'
     AWS_STORAGE_BUCKET_NAME = 'http-project'
-    STATIC_DISTRIBUTION_ID = 'dzx5c21ii2cyu'
+    STATIC_DISTRIBUTION_ID = '***********'
     AWS_S3_DOMAIN = '{}.cloudfront.net'.format(STATIC_DISTRIBUTION_ID)
     AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
     AWS_S3_OBJECT_PARAMETERS = {
