@@ -22,7 +22,14 @@
 <body>
     <h1>Hello world</h1>
     <h4>static images</h4>
-    <img src="{% static_cdn 'tile.png' %}" alt="">
+    <div class="cdn">
+        <h3>cdn image</h3>
+        <img src="{% static_cdn 'tile.png' %}" alt="">
+    </div>
+    <div class="s3">
+        <h4>s3 image</h4>
+        <img src="{% static 'tile.png' %}" alt="">
+    </div>
     <h4>public images</h4>
     {% for instance in public_images %}
         <img src="{{ instance.image.url }}" alt="">

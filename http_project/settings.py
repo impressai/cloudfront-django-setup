@@ -141,7 +141,7 @@ if not DEBUG:
     AWS_SECRET_ACCESS_KEY = '*******************************'
     AWS_STORAGE_BUCKET_NAME = 'http-project'
     STATIC_DISTRIBUTION_ID = '***********'
-    AWS_S3_DOMAIN = '{}.cloudfront.net'.format(STATIC_DISTRIBUTION_ID)
+    AWS_S3_CDN_DOMAIN = '{}.cloudfront.net'.format(STATIC_DISTRIBUTION_ID)
     AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
