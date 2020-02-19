@@ -16,7 +16,7 @@ class PublicImageModelViewSet(ModelViewSet):
 
 class PrivateImageModelViewSet(ModelViewSet):
     """
-    A simple ViewSet for viewing and editing PublicImage.
+    A simple ViewSet for viewing and editing PrivateImage.
     """
     queryset = PrivateImage.objects.all()
     serializer_class = PrivateImageModelSerializer

@@ -35,7 +35,7 @@ This will run the code with debug mode enabled now we need to run the code with 
     python manage.py runserver
 
 ### To test the public and private media file storage
-Got to `http://localhost:8000/admin/`
-The private files api is in `http://localhost:8000/admin/app/private_image`
-The private files api is in `http://localhost:8000/admin/app/public_image`
+Got to `http://localhost:8000/api/`
+The private files api is in `http://localhost:8000/api/private_image`
+The private files api is in `http://localhost:8000/api/public_image`
 
