@@ -5,6 +5,9 @@ This project is intended to demostrate the AWS CloudFront with the Django.
 Setting up
 ------------
 
+### Python version
+	python2
+
 ### Install python requirements
 	pip install -r requirements.txt
 
